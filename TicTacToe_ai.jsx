@@ -385,8 +385,8 @@ export default function TicTacToeAI() {
           marginBottom: 16,
         }}>
           <div style={{ fontSize: 11, letterSpacing: 3, color: "rgba(255,255,255,0.35)", marginBottom: 14, textTransform:"uppercase" }}>Record</div>
-          <StatBar label="Your wins" value={stats.wins} total={stats.gamesPlayed} color="#60c8ff" />
-          <StatBar label="AI wins" value={stats.losses} total={stats.gamesPlayed} color="#ff6b6b" />
+          <StatBar label="Your wins" value={stats.losses} total={stats.gamesPlayed} color="#60c8ff" />
+          <StatBar label="AI wins" value={stats.wins} total={stats.gamesPlayed} color="#ff6b6b" />
           <StatBar label="Draws" value={stats.draws} total={stats.gamesPlayed} color="#aaa" />
           <div style={{ marginTop:12, fontSize:11, color:"rgba(255,255,255,0.3)", textAlign:"center" }}>
             {stats.gamesPlayed} games played
