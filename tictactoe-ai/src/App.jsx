@@ -153,16 +153,14 @@ const STORAGE_KEY = "ttt_ai_state";
 
 async function loadAI() {
     try {
-        const result = await window.Storage.get(STORAGE_KEY);
-        if (result) return new QLearningAgent(JSON.parse(result.value));
+        const raw = localStorage.getItem(STORAGE_KEY)
+        if (raw) return new QLearningAgent(JSON.parse(raw));
     } catch (_) {}
     return new QLearningAgent();
 }
 
 async function saveAI(agent) {
-    try {
-        await window.Storage.set(STORAGE_KEY, JSON.stringify(agent.serialize()));
-    } catch (_) {}
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(agent.serialize()));
 }
 
 // ---- UI Components ______________________________________________________
