@@ -57,12 +57,12 @@ class QLearningAgent {
     }
 
     getQ(state, action) {
-        const key = '${state}:${action}';
+        const key = `${state}:${action}`;
         return this.qTable.has(key) ? this.qTable.get(key) : 0.0;
     }
 
     setQ(state, action, value) {
-        this.qTable.set('${state}:${action}', value);
+        this.qTable.set(`${state}:${action}`, value);
     }
 
     chooseAction(board) {
@@ -167,6 +167,16 @@ async function saveAI(agent) {
 
 const SQUARE_LABELS = ["TL", "TC", "TR","ML","MC","MR","BL","BC","BR"];
 
+const LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+function checkWinner(b) {
+  for (const [a,bb,c] of LINES) {
+    if (b[a] && b[a] === b[bb] && b[a] === b[c]) return { winner: b[a], line: [a,bb,c] };
+  }
+  if (b.every(c => c !== null)) return { winner: "draw", line: [] };
+  return null;
+}
+
 function Square({ value, index, onClick, highlight, aiTarget, playerFav }) {
     const isEmpty = value === null;
     return( 
@@ -239,6 +249,7 @@ export default function TicTacToeAI() {
   const [topSquares, setTopSquares] = useState([]);
   const [aiWatching, setAiWatching] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [lastResult, setLastResult] = useState(null);
   const agentRef = useRef(null);
 
@@ -252,16 +263,6 @@ export default function TicTacToeAI() {
       setLoaded(true);
     });
   }, []);
-
-  const LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-
-  function checkWinner(b) {
-    for (const [a,bb,c] of LINES) {
-      if (b[a] && b[a] === b[bb] && b[a] === b[c]) return { winner: b[a], line: [a,bb,c] };
-    }
-    if (b.every(c => c !== null)) return { winner: "draw", line: [] };
-    return null;
-  }
 
   const doAiMove = useCallback((currentBoard, currentAgent) => {
     setTimeout(() => {

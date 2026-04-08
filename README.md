@@ -7,3 +7,5 @@ MoveHistory: tracts your patterns so AI can counter your tendicies
 UI: game display + stats/learning progress
 
 the idea is The agent gradually learns which moves from which positions lead to good outcomes against you specifically and learns to counter you.
+
+found at "http://localhost:3000"
