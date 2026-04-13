@@ -17,7 +17,7 @@ function getWinner(board) {
         [0,4,8], [2,4,6]
     ];
     for (const [a,b,c] of lines) {
-        if(board[a] && board[a] === board[b] && board[a] == board[c]) return board[a];
+        if(board[a] && board[a] === board[b] && board[a] === board[c]) return board[a];
     }
     return null;
 }
@@ -383,12 +383,12 @@ export default function TicTacToeAI() {
           padding: "20px 18px",
           marginBottom: 16,
         }}>
-          <div style={{ fontSize: 11, letterSpacing: 3, color: "rgba(255,255,255,0.35)", marginBottom: 14, textTransform:"uppercase" }}>Record</div>
-          <StatBar label="Your wins" value={stats.losses} total={stats.gamesPlayed} color="#60c8ff" />
-          <StatBar label="AI wins" value={stats.wins} total={stats.gamesPlayed} color="#ff6b6b" />
+          <div style={{ fontSize: 11, letterSpacing: 3, color: "rgba(255,220,220,0.62)", marginBottom: 14, textTransform:"uppercase" }}>Record</div>
+          <StatBar label="Your Wins" value={stats.losses} total={stats.gamesPlayed} color="#60c8ff" />
+          <StatBar label="AI Wins" value={stats.wins} total={stats.gamesPlayed} color="#ff6b6b" />
           <StatBar label="Draws" value={stats.draws} total={stats.gamesPlayed} color="#aaa" />
-          <div style={{ marginTop:12, fontSize:11, color:"rgba(255,255,255,0.3)", textAlign:"center" }}>
-            {stats.gamesPlayed} games played
+          <div style={{ marginTop:12, fontSize:12, color:"rgba(225, 220, 220, 0.62)", textAlign:"center" }}>
+            {stats.gamesPlayed} Games Played
           </div>
         </div>
 
@@ -398,10 +398,10 @@ export default function TicTacToeAI() {
           borderRadius: 16,
           padding: "20px 18px",
         }}>
-          <div style={{ fontSize: 11, letterSpacing: 3, color: "rgba(255,255,255,0.35)", marginBottom: 14, textTransform:"uppercase" }}>AI Brain</div>
+          <div style={{ fontSize: 11, letterSpacing: 3, color: "rgba(255,220,220,0.62)", marginBottom: 14, textTransform:"uppercase" }}>AI Brain</div>
 
-          <div style={{ display:"flex", justifyContent:"space-between", fontSize:12, color:"rgba(255,255,255,0.5)", marginBottom:8 }}>
-            <span>Explore rate</span>
+          <div style={{ display:"flex", justifyContent:"space-between", fontSize:12, color:"rgba(255,220,220,0.62)", marginBottom:8 }}>
+            <span>Exploration rate</span>
             <span style={{color: epsilonPct > 20 ? "#ffa94d" : "#a9e34b"}}>{epsilonPct}%</span>
           </div>
           <div style={{ height:4, background:"rgba(255,255,255,0.08)", borderRadius:2, marginBottom:16 }}>
@@ -414,7 +414,7 @@ export default function TicTacToeAI() {
           {topSquares.length > 0 && (
             <>
               <div style={{ fontSize:11, color:"rgba(255,255,255,0.35)", marginBottom:8, letterSpacing:2, textTransform:"uppercase" }}>Your patterns</div>
-              <div style={{ fontSize:12, color:"rgba(80,180,255,0.8)" }}>
+              <div style={{ fontSize:12, fontWeight:700, color:"rgba(80,180,255,0.8)" }}>
                 You often play: {topSquares.map(s => SQUARE_LABELS[s]).join(", ")}
               </div>
             </>
@@ -436,7 +436,7 @@ export default function TicTacToeAI() {
           }}>
             Tic·Tac·Toe
           </h1>
-          <div style={{ textAlign:"center", fontSize:12, color:"rgba(255,255,255,0.3)", letterSpacing:3, marginTop:4 }}>
+          <div style={{ textAlign:"center", fontSize:12, color:"rgba(255,220,220,0.62)", letterSpacing:3, marginTop:4 }}>
             ADAPTIVE AI
           </div>
         </div>
@@ -477,13 +477,13 @@ export default function TicTacToeAI() {
         </div>
 
         {/* Legend */}
-        <div style={{ display:"flex", gap:20, fontSize:11, color:"rgba(255,255,255,0.3)" }}>
+        <div style={{ display:"flex", gap:20, fontSize:11, color:"rgba(255,220,220,0.62)" }}>
           <span>🔵 = You (X)</span>
           <span>🔴 = AI (O)</span>
         </div>
         {!winner && playerTurn && topSquares.length > 0 && (
-          <div style={{ fontSize:11, color:"rgba(255,255,255,0.25)", textAlign:"center" }}>
-            <span style={{color:"rgba(255,80,80,0.5)"}}>AI↑</span> = AI watching · <span style={{color:"rgba(80,180,255,0.5)"}}>★</span> = your fav square
+          <div style={{ fontSize:11, color:"rgba(255,220,220,0.62)", textAlign:"center" }}>
+            <span style={{color:"rgba(243, 24, 24, 0.71)"}}>AI↑</span> = AI watching · <span style={{color:"rgba(40, 142, 220, 0.68)"}}>★</span> = your fav square
           </div>
         )}
 
@@ -529,7 +529,7 @@ export default function TicTacToeAI() {
           borderRadius: 16,
           padding: "20px 18px",
         }}>
-          <div style={{ fontSize:11, letterSpacing:3, color:"rgba(255,255,255,0.35)", marginBottom:14, textTransform:"uppercase" }}>How It Learns</div>
+          <div style={{ fontSize:11, letterSpacing:3, color:"rgba(255,220,220,0.62)", marginBottom:14, textTransform:"uppercase" }}>How It Learns</div>
           {[
             { icon:"🧠", title:"Q-Learning", desc:"Maps board states → move values, updated after every game." },
             { icon:"👁️", title:"Pattern Memory", desc:"Tracks your favorite squares and tries to counter them." },
@@ -538,10 +538,10 @@ export default function TicTacToeAI() {
           ].map(({ icon, title, desc }) => (
             <div key={title} style={{ marginBottom:14 }}>
               <div style={{ fontSize:13, color:"rgba(255,255,255,0.75)", fontWeight:600, marginBottom:3 }}>{icon} {title}</div>
-              <div style={{ fontSize:11, color:"rgba(255,255,255,0.35)", lineHeight:1.5 }}>{desc}</div>
+              <div style={{ fontSize:11, color:"rgba(255,220,220,0.62)", lineHeight:1.5 }}>{desc}</div>
             </div>
           ))}
-          <div style={{ marginTop:8, padding:"10px 12px", background:"rgba(255,220,50,0.06)", border:"1px solid rgba(255,220,50,0.15)", borderRadius:8, fontSize:11, color:"rgba(255,220,50,0.6)", lineHeight:1.5 }}>
+          <div style={{ marginTop:8, padding:"10px 12px", background:"rgba(255,220,50,0.06)", border:"1px solid rgba(255,220,50,0.15)", borderRadius:8, fontSize:11, fontWeight:600, color:"rgba(255,220,50,0.6)", lineHeight:1.5 }}>
             💡 Play ~20+ games to see the AI adapt to your style
           </div>
         </div>
