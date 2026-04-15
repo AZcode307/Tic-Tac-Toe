@@ -250,7 +250,7 @@ export default function TicTacToeAI() {
   const [aiWatching, setAiWatching] = useState([]);
   const [loaded, setLoaded] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [lastResult, setLastResult] = useState(null);
+  const [lastLoser, setLastLoser] = useState(null);
   const agentRef = useRef(null);
 
   // Load agent from storage
@@ -280,11 +280,11 @@ export default function TicTacToeAI() {
         if (result.winner === "O") {
           currentAgent.endGame(1);
           setStatus("AI wins! 🤖");
-          setLastResult("loss");
+          setLastLoser("ai");
         } else if (result.winner === "draw") {
           currentAgent.endGame(0);
           setStatus("Draw! 🤝");
-          setLastResult("draw");
+          setLastLoser(null);
         }
         setWinner(result.winner);
         setWinLine(result.line);
@@ -319,11 +319,11 @@ export default function TicTacToeAI() {
       if (result.winner === "X") {
         a.endGame(-1);
         setStatus("You win! 🎉");
-        setLastResult("win");
+        setLastLoser("player");
       } else if (result.winner === "draw") {
         a.endGame(0);
         setStatus("Draw! 🤝");
-        setLastResult("draw");
+        setLastLoser(null);
       }
       setWinner(result.winner);
       setWinLine(result.line);
@@ -338,13 +338,21 @@ export default function TicTacToeAI() {
   }
 
   function resetGame() {
+    const aiGoesFirst = lastLoser === "ai";
     setBoard(Array(9).fill(null));
-    setPlayerTurn(true);
     setWinner(null);
     setWinLine([]);
-    setStatus("Your turn");
-    setLastResult(null);
+    setLastLoser(null);
     setAiWatching(agentRef.current?.getTopPlayerSquares() || []);
+
+    if (aiGoesFirst) {
+      setPlayerTurn(false);
+      setStatus("AI goes first...");
+      doAiMove(Array(9).fill(null), agentRef.current);
+    } else {
+      setPlayerTurn(true);
+      setStatus("Your turn");
+    }
   }
 
   async function resetAI() {
@@ -438,6 +446,9 @@ export default function TicTacToeAI() {
           </h1>
           <div style={{ textAlign:"center", fontSize:12, color:"rgba(255,220,220,0.62)", letterSpacing:3, marginTop:4 }}>
             ADAPTIVE AI
+          </div>
+          <div style={{ textAlign:"center", fontSize:11, color:"rgba(255,220,220,0.62)", letterSpacing:2, marginTop:4 }}>
+            {lastLoser === "ai" ? "AI goes first (you won last)" : "You go first!"}
           </div>
         </div>
 
