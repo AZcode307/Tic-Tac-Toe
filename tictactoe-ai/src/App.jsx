@@ -280,7 +280,7 @@ export default function TicTacToeAI() {
         if (result.winner === "O") {
           currentAgent.endGame(1);
           setStatus("AI wins! 🤖");
-          setLastLoser("ai");
+          setLastLoser("player");
         } else if (result.winner === "draw") {
           currentAgent.endGame(0);
           setStatus("Draw! 🤝");
@@ -319,7 +319,7 @@ export default function TicTacToeAI() {
       if (result.winner === "X") {
         a.endGame(-1);
         setStatus("You win! 🎉");
-        setLastLoser("player");
+        setLastLoser("ai");
       } else if (result.winner === "draw") {
         a.endGame(0);
         setStatus("Draw! 🤝");
@@ -336,10 +336,11 @@ export default function TicTacToeAI() {
 
     doAiMove(newBoard, a);
   }
-
+  
   function resetGame() {
     const aiGoesFirst = lastLoser === "ai";
-    setBoard(Array(9).fill(null));
+    const emptyBoard = Array(9).fill(null);
+    setBoard(emptyBoard);
     setWinner(null);
     setWinLine([]);
     setLastLoser(null);
@@ -348,7 +349,7 @@ export default function TicTacToeAI() {
     if (aiGoesFirst) {
       setPlayerTurn(false);
       setStatus("AI goes first...");
-      doAiMove(Array(9).fill(null), agentRef.current);
+      doAiMove(emptyBoard, agentRef.current);
     } else {
       setPlayerTurn(true);
       setStatus("Your turn");
@@ -363,8 +364,13 @@ export default function TicTacToeAI() {
     setStats({ gamesPlayed:0, wins:0, losses:0, draws:0 });
     setTopSquares([]);
     setAiWatching([]);
-    resetGame();
-  }
+    setLastLoser(null);
+    setBoard(Array(9).fill(null));
+    setWinner(null);
+    setWinLine([]);
+    setPlayerTurn(true);
+    setStatus("AI reset! Your turn.");
+    }
 
   const epsilonPct = agent ? Math.round(Math.max(EPSILON_MIN, EPSILON_START - ((agent.gamesPlayed || 0) * 0.005)) * 100) : Math.round(EPSILON_START * 100);
   const qTableSize = agent?.qTable?.size || agentRef.current?.qTable?.size || 0;
