@@ -526,7 +526,7 @@ export default function TicTacToeAI() {
             background: "rgba(255,80,80,0.07)",
             border: "1px solid rgba(255,80,80,0.2)",
             borderRadius: 10,
-            color: "rgba(255,100,100,0.6)",
+            color: "rgba(245, 40, 40, 0.86)",
             cursor: "pointer",
             fontSize: 12,
             fontFamily: "inherit",
